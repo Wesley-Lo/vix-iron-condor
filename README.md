@@ -18,7 +18,7 @@ Sells a 15:00 ET SPXW iron condor (10-point wings, strikes at ±1 expected move)
 ## Running
 ```
 pip install -r requirements.txt
-set DATABENTO_API_KEY=...        (Windows; never commit it)
+set DATABENTO_API_KEY=... 
 python src/forward.py update
 python src/forward.py report
 python -m pytest tests -q
