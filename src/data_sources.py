@@ -11,6 +11,22 @@ BUDGET_USD = float(os.environ.get("FWD_DATABENTO_BUDGET_USD", "5.00"))
 NY = ZoneInfo("America/New_York")
 
 
+def _load_dotenv():
+    """Read KEY=VALUE lines from REPO/.env into os.environ (never overrides real environment variables)."""
+    f = REPO / ".env"
+    if not f.exists():
+        return
+    for line in f.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
+_load_dotenv()
+
+
 def yahoo_close(ticker, start, end):
     import yfinance as yf
     x = yf.download(ticker, start=str(start), end=str(end + dt.timedelta(days=1)), progress=False, auto_adjust=False)["Close"]
